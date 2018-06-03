@@ -1,0 +1,15 @@
+{
+    "name": "blabs",
+    "description": "",
+    "secretKey": "",
+    "services": [
+        {
+            "appId": "",
+            "id": "7116c9b0-677a-11e8-a4d3-1b0567560c0e",
+            "type": "endpoint",
+            "appPassword": "",
+            "endpoint": "http://localhost:3978/api/messages",
+            "name": "http://localhost:3978/api/messages"
+        }
+    ]
+}
