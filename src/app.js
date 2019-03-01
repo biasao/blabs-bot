@@ -30,3 +30,8 @@ bot.dialog(
     'bedroomReservationDialog',
     dinnerReservationDialog.dialog
 );
+
+bot.dialog(
+    'mainDialog',
+    mainDialog.dialog
+);
