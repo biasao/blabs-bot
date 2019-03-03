@@ -1,8 +1,7 @@
 const restify = require('restify');
 const builder = require('botbuilder');
-var dinnerReservationDialog = require('./dialogs/dinner-reservation');
-var bedroomReservationDialog = require('./dialogs/bedroom-reservation');
-var mainDialog = require('./dialogs/main');
+let mainDialog = require('./dialogs/main');
+let dialogParser = require('./grammar/dialog-parser');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -27,11 +26,6 @@ var bot = new builder.UniversalBot(connector, function(session) {
 }).set('storage', inMemoryStorage); // Register in-memory storage
 
 bot.dialog(
-    'bedroomReservationDialog',
-    dinnerReservationDialog.dialog
-);
-
-bot.dialog(
     'mainDialog',
-    mainDialog.dialog
+    dialogParser.parse("a -> b")
 );
