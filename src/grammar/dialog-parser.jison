@@ -18,7 +18,6 @@
 /* operator associations and precedence */
 
 %left 'TRANSITION'
-%left 'TOKEN'
 
 %start expressions
 
@@ -30,10 +29,10 @@ expressions
     ;
 
 e
-    : TOKEN
-        {$$ = yytext;}
-    | TOKEN TRANSITION TOKEN
+    : e TRANSITION e
         {{
-          $$ = ([ function (session) { session.send("Welcome to the bedroom reservation service."); require('botbuilder').Prompts.time(session, "Please provide a reservation date and time (e.g.: June 6th at 5pm)"); } ]);          
+          $$ = function (session) { session.send($1); require('botbuilder').Prompts.text(session, $3); };
         }}
+    | TOKEN
+        {$$ = yytext;}
     ;

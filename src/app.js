@@ -25,7 +25,11 @@ var bot = new builder.UniversalBot(connector, function(session) {
     session.beginDialog('mainDialog');
 }).set('storage', inMemoryStorage); // Register in-memory storage
 
+let waterfallDialog = [];
+waterfallDialog.push(dialogParser.parse("mateus -> miguel"));
+waterfallDialog.push(dialogParser.parse("beto -> mi"));
+
 bot.dialog(
     'mainDialog',
-    dialogParser.parse("a -> b")
+    waterfallDialog
 );
