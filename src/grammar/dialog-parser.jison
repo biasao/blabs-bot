@@ -6,10 +6,10 @@
 %%
 
 \s+                        /* skip whitespace */
-([a-z]|[A-Z])+[0-9]*\b      return 'TOKEN'
+\"(.*?)\"                   return 'TEXT'
 "->"                        return 'TRANSITION'
-"("                         return '('
-")"                         return ')'
+"send"                      return 'SEND'
+"prompt"                    return 'PROMPT'
 <<EOF>>                     return 'EOF'
 .                           return 'INVALID'
 
@@ -18,6 +18,8 @@
 /* operator associations and precedence */
 
 %left 'TRANSITION'
+%left 'SEND'
+%left 'PROMPT'
 
 %start expressions
 
@@ -31,8 +33,12 @@ expressions
 e
     : e TRANSITION e
         {{
-          $$ = function (session) { session.send($1); require('botbuilder').Prompts.text(session, $3); };
+          $$ = function (session) { $1; $3; };
         }}
-    | TOKEN
+    | SEND e
+        {$$ = session.send($2);}
+    | PROMPT e
+        {$$ = require('botbuilder').Prompts.text(session, $2);}
+    | TEXT
         {$$ = yytext;}
     ;

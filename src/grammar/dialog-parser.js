@@ -72,12 +72,12 @@
   }
 */
 var dialogParser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[5,6];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[5,6];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"TRANSITION":6,"TOKEN":7,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"TRANSITION",7:"TOKEN"},
-productions_: [0,[3,2],[4,3],[4,1]],
+symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"TRANSITION":6,"SEND":7,"PROMPT":8,"TEXT":9,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"TRANSITION",7:"SEND",8:"PROMPT",9:"TEXT"},
+productions_: [0,[3,2],[4,3],[4,2],[4,2],[4,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -88,16 +88,22 @@ case 1:
 break;
 case 2:
 
-          this.$ = function (session) { session.send($$[$0-2]); require('botbuilder').Prompts.text(session, $$[$0]); };
+          this.$ = function (session) { $$[$0-2]; $$[$0]; };
         
 break;
 case 3:
+this.$ = session.send($$[$0]);
+break;
+case 4:
+this.$ = require('botbuilder').Prompts.text(session, $$[$0]);
+break;
+case 5:
 this.$ = yytext;
 break;
 }
 },
-table: [{3:1,4:2,7:$V0},{1:[3]},{5:[1,4],6:[1,5]},o($V1,[2,3]),{1:[2,1]},{4:6,7:$V0},o($V1,[2,2])],
-defaultActions: {4:[2,1]},
+table: [{3:1,4:2,7:$V0,8:$V1,9:$V2},{1:[3]},{5:[1,6],6:[1,7]},{4:8,7:$V0,8:$V1,9:$V2},{4:9,7:$V0,8:$V1,9:$V2},o($V3,[2,5]),{1:[2,1]},{4:10,7:$V0,8:$V1,9:$V2},o($V3,[2,3]),o($V3,[2,4]),o($V3,[2,2])],
+defaultActions: {6:[2,1]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -574,13 +580,13 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:/* skip whitespace */
 break;
-case 1:return 7
+case 1:return 9
 break;
 case 2:return 6
 break;
-case 3:return '('
+case 3:return 7
 break;
-case 4:return ')'
+case 4:return 8
 break;
 case 5:return 5
 break;
@@ -588,7 +594,7 @@ case 6:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:([a-z]|[A-Z])+[0-9]*\b)/,/^(?:->)/,/^(?:\()/,/^(?:\))/,/^(?:$)/,/^(?:.)/],
+rules: [/^(?:\s+)/,/^(?:"(.*?)")/,/^(?:->)/,/^(?:send\b)/,/^(?:prompt\b)/,/^(?:$)/,/^(?:.)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6],"inclusive":true}}
 });
 return lexer;
