@@ -36,9 +36,13 @@ e
           $$ = function (session) { $1; $3; };
         }}
     | SEND e
-        {$$ = session.send($2);}
+        {{
+          $$ = function (session) { session.send($2); }
+        }}
     | PROMPT e
-        {$$ = require('botbuilder').Prompts.text(session, $2);}
+        {{
+          $$ = function (session) { require('botbuilder').Prompts.text(session, $2) }
+        }}
     | TEXT
         {$$ = yytext;}
     ;

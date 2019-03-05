@@ -26,7 +26,8 @@ var bot = new builder.UniversalBot(connector, function(session) {
 }).set('storage', inMemoryStorage); // Register in-memory storage
 
 let waterfallDialog = [];
-waterfallDialog.push(dialogParser.parse("send \"Welcome to the bedroom reservation service.\" -> prompt \"Please provide a reservation date and time (e.g.: June 6th at 5pm)\""));
+waterfallDialog.push(dialogParser.parse("send \"Welcome to the bedroom reservation service.\""));
+waterfallDialog.push(dialogParser.parse("prompt \"Please provide a reservation date and time (e.g.: June 6th at 5pm)\""));
 
 bot.dialog(
     'mainDialog',

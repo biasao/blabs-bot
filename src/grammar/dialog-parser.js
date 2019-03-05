@@ -92,10 +92,14 @@ case 2:
         
 break;
 case 3:
-this.$ = session.send($$[$0]);
+
+          this.$ = function (session) { session.send($$[$0]); }
+        
 break;
 case 4:
-this.$ = require('botbuilder').Prompts.text(session, $$[$0]);
+
+          this.$ = function (session) { require('botbuilder').Prompts.text(session, $$[$0]) }
+        
 break;
 case 5:
 this.$ = yytext;
