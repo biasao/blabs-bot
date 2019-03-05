@@ -6,6 +6,7 @@
 %%
 
 \s+                        /* skip whitespace */
+"dialog"                    return 'DIALOG'
 "send"                      return 'SEND'
 "prompt"                    return 'PROMPT'
 \"(.*?)\"                   return 'TEXT'
@@ -31,12 +32,14 @@ expressions
 e
     : SEND TOKEN TEXT
         {{
-          $$ = global[$2] = (session, args, next) => { session.send($3); next(); }
+          $$ = dialogVars[$2] = (session, args, next) => { session.send($3); next(); }
         }}
     | PROMPT TOKEN TEXT
         {{
-          $$ = global[$2] = (session) => { require('botbuilder').Prompts.text(session, $3); }
+          $$ = dialogVars[$2] = (session) => { require('botbuilder').Prompts.text(session, $3); }
         }}
+    | DIALOG TEXT
+        {$$ = global['dialogVars'] = [];}
     | TEXT
         {$$ = yytext;}
     | TOKEN
