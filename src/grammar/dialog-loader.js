@@ -11,7 +11,11 @@ let load = (path) => {
     lineReader.on('line', function (line) {
         console.log('Line from file:', line);
 
-        waterfallDialog.push(dialogParser.parse(line));
+        dialogParser.parse(line);
+
+        //TODO fix referencing dialogs while loading
+        if(global['welcome']) waterfallDialog.push(welcome);
+        if(global['askReservationTime']) waterfallDialog.push(askReservationTime);
     });
 
     return waterfallDialog;
