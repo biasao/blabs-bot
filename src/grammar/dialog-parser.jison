@@ -37,11 +37,11 @@ e
         }}
     | SEND e
         {{
-          $$ = function (session) { session.send($2); }
+          $$ = (session, args, next) => { session.send($2); next(); }
         }}
     | PROMPT e
         {{
-          $$ = function (session) { require('botbuilder').Prompts.text(session, $2) }
+          $$ = (session) => { require('botbuilder').Prompts.text(session, $2) }
         }}
     | TEXT
         {$$ = yytext;}

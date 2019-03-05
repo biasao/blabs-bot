@@ -93,12 +93,12 @@ case 2:
 break;
 case 3:
 
-          this.$ = function (session) { session.send($$[$0]); }
+          this.$ = (session, args, next) => { session.send($$[$0]); next(); }
         
 break;
 case 4:
 
-          this.$ = function (session) { require('botbuilder').Prompts.text(session, $$[$0]) }
+          this.$ = (session) => { require('botbuilder').Prompts.text(session, $$[$0]) }
         
 break;
 case 5:
