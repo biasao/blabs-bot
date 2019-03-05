@@ -1,7 +1,6 @@
 const restify = require('restify');
 const builder = require('botbuilder');
-let mainDialog = require('./dialogs/main');
-let dialogParser = require('./grammar/dialog-parser');
+let dialogLoader = require('./grammar/dialog-loader');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -25,11 +24,9 @@ var bot = new builder.UniversalBot(connector, function(session) {
     session.beginDialog('mainDialog');
 }).set('storage', inMemoryStorage); // Register in-memory storage
 
-let waterfallDialog = [];
-waterfallDialog.push(dialogParser.parse("send \"Welcome to the bedroom reservation service.\""));
-waterfallDialog.push(dialogParser.parse("prompt \"Please provide a reservation date and time (e.g.: June 6th at 5pm)\""));
 
+let dinnerReservation = dialogLoader.load('./src/dialogs/dinner-reservation.dialog')
 bot.dialog(
     'mainDialog',
-    waterfallDialog
+    dinnerReservation
 );
