@@ -75,9 +75,9 @@ var dialogParser = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o};
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"SEND":6,"TOKEN":7,"TEXT":8,"PROMPT":9,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"SEND",7:"TOKEN",8:"TEXT",9:"PROMPT"},
-productions_: [0,[3,2],[4,3],[4,3],[4,1],[4,1]],
+symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"SEND":6,"TOKEN":7,"TEXT":8,"PROMPT":9,"DIALOG":10,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"SEND",7:"TOKEN",8:"TEXT",9:"PROMPT",10:"DIALOG"},
+productions_: [0,[3,2],[4,3],[4,3],[4,2],[4,1],[4,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -88,21 +88,24 @@ case 1:
 break;
 case 2:
 
-          this.$ = global[$$[$0-1]] = (session, args, next) => { session.send($$[$0]); next(); }
+          this.$ = global['dialogVars'][$$[$0-1]] = (session, args, next) => { session.send($$[$0]); next(); }
         
 break;
 case 3:
 
-          this.$ = global[$$[$0-1]] = (session) => { require('botbuilder').Prompts.text(session, $$[$0]); }
+          this.$ = global['dialogVars'][$$[$0-1]] = (session) => { require('botbuilder').Prompts.text(session, $$[$0]); }
         
 break;
-case 4: case 5:
+case 4:
+this.$ = global['dialogVars'] = [];
+break;
+case 5: case 6:
 this.$ = yytext;
 break;
 }
 },
-table: [{3:1,4:2,6:[1,3],7:[1,6],8:[1,5],9:[1,4]},{1:[3]},{5:[1,7]},{7:[1,8]},{7:[1,9]},{5:[2,4]},{5:[2,5]},{1:[2,1]},{8:[1,10]},{8:[1,11]},{5:[2,2]},{5:[2,3]}],
-defaultActions: {5:[2,4],6:[2,5],7:[2,1],10:[2,2],11:[2,3]},
+table: [{3:1,4:2,6:[1,3],7:[1,7],8:[1,6],9:[1,4],10:[1,5]},{1:[3]},{5:[1,8]},{7:[1,9]},{7:[1,10]},{8:[1,11]},{5:[2,5]},{5:[2,6]},{1:[2,1]},{8:[1,12]},{8:[1,13]},{5:[2,4]},{5:[2,2]},{5:[2,3]}],
+defaultActions: {6:[2,5],7:[2,6],8:[2,1],11:[2,4],12:[2,2],13:[2,3]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -579,22 +582,24 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:/* skip whitespace */
 break;
-case 1:return 6
+case 1:return 10
 break;
-case 2:return 9
+case 2:return 6
 break;
-case 3:return 8
+case 3:return 9
 break;
-case 4:return 7
+case 4:return 8
 break;
-case 5:return 5
+case 5:return 7
 break;
-case 6:return 'INVALID'
+case 6:return 5
+break;
+case 7:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:send\b)/,/^(?:prompt\b)/,/^(?:"(.*?)")/,/^(?:\w+\b)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:dialog\b)/,/^(?:send\b)/,/^(?:prompt\b)/,/^(?:"(.*?)")/,/^(?:\w+\b)/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
 });
 return lexer;
 })();

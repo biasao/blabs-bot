@@ -1,2 +1,4 @@
+dialog "dinnerReservation"
+
 send welcome "Welcome to the bedroom reservation service."
-prompt askReservationTime "Please provide a reservation date and time (e.g.: June 6th at 5pm)"
+prompt askReservationTime "Please provide a reservation date and time (e.g.: June 6th at 5pm)."

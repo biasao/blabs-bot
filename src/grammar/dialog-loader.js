@@ -4,20 +4,18 @@ let load = (path) => {
     let waterfallDialog = [];
     console.log('Loading dialog:', path);
 
-    let lineReader = require('readline').createInterface({
-        input: require('fs').createReadStream(path)
-    });
+    var lines = require('fs').readFileSync(path, 'utf-8')
+        .split('\n')
+        .filter(Boolean)
 
-    lineReader.on('line', function (line) {
-        console.log('Line from file:', line);
+    lines.forEach( (line) => {
+        if (line.trim()) dialogParser.parse(line);
+    })
 
-        dialogParser.parse(line);
-
-        //TODO fix referencing dialogs while loading
-        if(global['welcome']) waterfallDialog.push(welcome);
-        if(global['askReservationTime']) waterfallDialog.push(askReservationTime);
-    });
-
+    Object.keys(global['dialogVars']).forEach(function(key) {
+        waterfallDialog.push(global['dialogVars'][key]);
+      });
+        
     return waterfallDialog;
 };
 

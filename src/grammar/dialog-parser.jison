@@ -32,11 +32,11 @@ expressions
 e
     : SEND TOKEN TEXT
         {{
-          $$ = dialogVars[$2] = (session, args, next) => { session.send($3); next(); }
+          $$ = global['dialogVars'][$2] = (session, args, next) => { session.send($3); next(); }
         }}
     | PROMPT TOKEN TEXT
         {{
-          $$ = dialogVars[$2] = (session) => { require('botbuilder').Prompts.text(session, $3); }
+          $$ = global['dialogVars'][$2] = (session) => { require('botbuilder').Prompts.text(session, $3); }
         }}
     | DIALOG TEXT
         {$$ = global['dialogVars'] = [];}
